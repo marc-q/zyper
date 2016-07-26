@@ -6,7 +6,7 @@
 #include <time.h>
 #include "zyper.h"
 
-static char zyper_cmpwrd (char *target, char *str)
+static int zyper_cmpwrd (char *target, char *str)
 {
 	if (strlen (target) != strlen (str))
 	{
