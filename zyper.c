@@ -88,14 +88,14 @@ static void zyper_wait (unsigned short secs)
 static void zyper_counter (void)
 {
 	printf ("3\n");
-	
 	zyper_wait (1);
+	
 	printf ("2\n");
-	
 	zyper_wait (1);
+	
 	printf ("1\n");
-	
 	zyper_wait (1);
+	
 	printf ("GO!\n");
 }
 
