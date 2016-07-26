@@ -21,7 +21,7 @@ static void zyper_init_data (zyper_data *zdata)
 	zdata->wrds_amount = 0;
 }
 
-static char zyper_read_wrds (zyper_data *zdata, char *filename)
+static short zyper_read_wrds (zyper_data *zdata, char *filename)
 {
 	unsigned short i;
 	char line[250];
@@ -142,7 +142,9 @@ static void zyper_gameloop (zyper_data *zdata)
 
 int main (int argc, char *argv[])
 {
+	short r;
 	zyper_data zdata;
+	
 	printf ("Zyper v. 0.0.1 A (c) 2016 Marc Volker Dickmann\n\n");
 	
 	srand (time (NULL));
@@ -151,15 +153,18 @@ int main (int argc, char *argv[])
 	
 	if (argc == 2)
 	{
-		zyper_read_wrds (&zdata, argv[1]);
+		r = zyper_read_wrds (&zdata, argv[1]);
 	}
 	else
 	{
-		zyper_read_wrds (&zdata, "testwrds.txt");
+		r = zyper_read_wrds (&zdata, "testwrds.txt");
 	}
 
-	zyper_gameloop (&zdata);
-	zyper_free_wrds (&zdata);
+	if (r == 0)
+	{
+		zyper_gameloop (&zdata);
+		zyper_free_wrds (&zdata);
+	}
 	
 	return 0;
 }
