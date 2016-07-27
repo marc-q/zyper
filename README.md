@@ -10,4 +10,4 @@ A little typing game written in plain C.
 ### How to make an wordbook:
 1. Create a new file.
 2. Fill it with words (each line contains 1 word).
-3. Save it and use it. Have fun.
+3. Save and use it. Have fun.
