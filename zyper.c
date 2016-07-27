@@ -166,6 +166,10 @@ int main (int argc, char *argv[])
 		zyper_gameloop (&zdata);
 		zyper_free_wrds (&zdata);
 	}
+	else
+	{
+		printf ("ERROR: Couldn't read the wordbook!\n");
+	}
 	
 	return 0;
 }
