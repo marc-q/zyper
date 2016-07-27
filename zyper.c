@@ -48,6 +48,7 @@ static short zyper_read_wrds (zyper_data *zdata, char *filename)
 	{
 		zdata->wrds[i] = (char*) malloc (sizeof (char) * (strlen (line) + 1));
 		strcpy (zdata->wrds[i], line);
+		zdata->wrds[i][strlen (line)] = '\0';
 		i++; 
 	}
 	
