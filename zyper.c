@@ -109,7 +109,7 @@ static void zyper_gameloop (zyper_data *zdata)
 	lives = 3;
 	correctwrds = 0;
 	
-	printf ("Welcome to Zyper!\nType the given wrd correctly. Youve go %hi lives. Each failure results in losing 1 live.\nYouve got 1 minute!\n", lives); 
+	printf ("Welcome to Zyper!\nType the given wrd correctly. Youve got %hi lives. Each failure results in losing 1 live.\nYouve got 1 minute!\n", lives); 
 
 	zyper_counter ();
 
