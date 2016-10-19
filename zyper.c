@@ -2,18 +2,14 @@
 /* Project: Zyper */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <time.h>
 #include "zyper.h"
 
-static int zyper_cmpwrd (char *target, char *str)
+static bool zyper_cmpwrd (const char *target, const char *str)
 {
-	if (strlen (target) != strlen (str))
-	{
-		return -1;
-	}
-	
-	return strcmp (target, str);
+	return strlen (target) == strlen (str) && strcmp (target, str) == 0;
 }
 
 static void zyper_init_data (zyper_data *zdata)
@@ -21,14 +17,13 @@ static void zyper_init_data (zyper_data *zdata)
 	zdata->wrds_amount = 0;
 }
 
-static short zyper_read_wrds (zyper_data *zdata, char *filename)
+static short zyper_read_wrds (zyper_data *zdata, const char *filename)
 {
 	unsigned short i;
 	char line[250];
 	FILE *wrdsfile;
 	
 	i = 0;
-	
 	wrdsfile = fopen (filename, "r");
 	
 	if (wrdsfile == NULL)
@@ -53,7 +48,6 @@ static short zyper_read_wrds (zyper_data *zdata, char *filename)
 	}
 	
 	fclose (wrdsfile);
-	
 	return 0;
 }
 
@@ -65,16 +59,15 @@ static void zyper_free_wrds (zyper_data *zdata)
 	{
 		free (zdata->wrds[i]);
 	}
-	
 	free (zdata->wrds);
 }
 
-static char *zyper_get_wrd (zyper_data *zdata)
+static char *zyper_get_wrd (const zyper_data *zdata)
 {
 	return zdata->wrds[rand () % zdata->wrds_amount];
 }
 
-static void zyper_wait (unsigned short secs)
+static void zyper_wait (const unsigned short secs)
 {
 	struct timespec req, rem;
 	
@@ -109,7 +102,7 @@ static void zyper_gameloop (zyper_data *zdata)
 	lives = 3;
 	correctwrds = 0;
 	
-	printf ("Welcome to Zyper!\nType the given wrd correctly. Youve got %hi lives. Each failure results in losing 1 live.\nYouve got 1 minute!\n", lives); 
+	printf ("Welcome to Zyper!\nType the given wrd correctly. Youve got %hu lives. Each failure results in losing 1 live.\nYouve got 1 minute!\n", lives); 
 
 	zyper_counter ();
 
@@ -126,7 +119,8 @@ static void zyper_gameloop (zyper_data *zdata)
 		
 		t = time (NULL) - t;
 		
-		if (zyper_cmpwrd (wrd, wrd_in) == 0 && time (NULL) - ts <= 60)
+		if (zyper_cmpwrd (wrd, wrd_in) &&
+		    time (NULL) - ts <= 60)
 		{
 			printf ("Done in %i seconds!\n", (int) t);
 			correctwrds++;
@@ -134,7 +128,7 @@ static void zyper_gameloop (zyper_data *zdata)
 		else
 		{
 			lives--;
-			printf ("WRONG! Lives: %hi\n", lives); 
+			printf ("WRONG! Lives: %hu\n", lives); 
 		}
 	}
 
@@ -143,25 +137,14 @@ static void zyper_gameloop (zyper_data *zdata)
 
 int main (int argc, char *argv[])
 {
-	short r;
 	zyper_data zdata;
 	
 	printf ("Zyper v. 0.0.1 A (c) 2016 Marc Volker Dickmann\n\n");
 	
 	srand (time (NULL));
-	
 	zyper_init_data (&zdata);
 	
-	if (argc == 2)
-	{
-		r = zyper_read_wrds (&zdata, argv[1]);
-	}
-	else
-	{
-		r = zyper_read_wrds (&zdata, "testwrds.txt");
-	}
-
-	if (r == 0)
+	if (zyper_read_wrds (&zdata, (argc == 2 ? argv[1] : "testwrds.txt")) == 0)
 	{
 		zyper_gameloop (&zdata);
 		zyper_free_wrds (&zdata);
