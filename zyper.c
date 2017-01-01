@@ -1,4 +1,4 @@
-/* Copyright 2016 Marc Volker Dickmann */
+/* Copyright 2016 - 2017 Marc Volker Dickmann */
 /* Project: Zyper */
 #include <stdio.h>
 #include <stdlib.h>
@@ -139,7 +139,7 @@ int main (int argc, char *argv[])
 {
 	zyper_data zdata;
 	
-	printf ("Zyper v. 0.0.1 A (c) 2016 Marc Volker Dickmann\n\n");
+	printf ("Zyper v. 0.0.1 A (c) 2016 - 2017 Marc Volker Dickmann\n\n");
 	
 	srand (time (NULL));
 	zyper_init_data (&zdata);
