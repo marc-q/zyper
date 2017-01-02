@@ -17,18 +17,17 @@ static void zyper_init_data (zyper_data *zdata)
 	zdata->wrds_amount = 0;
 }
 
-static short zyper_read_wrds (zyper_data *zdata, const char *filename)
+static bool zyper_read_wrds (zyper_data *zdata, const char *filename)
 {
 	unsigned short i;
 	char line[250];
 	FILE *wrdsfile;
 	
-	i = 0;
 	wrdsfile = fopen (filename, "r");
 	
 	if (wrdsfile == NULL)
 	{
-		return -1;
+		return false;
 	}
 	
 	while (fgets (line, sizeof (line), wrdsfile) != NULL)
@@ -39,16 +38,15 @@ static short zyper_read_wrds (zyper_data *zdata, const char *filename)
 	zdata->wrds = (char**) malloc (sizeof (char*) * zdata->wrds_amount);
 	rewind (wrdsfile);
 	
+	i = 0;
 	while (fgets (line, sizeof (line), wrdsfile) != NULL)
 	{
-		zdata->wrds[i] = (char*) malloc (sizeof (char) * (strlen (line) + 1));
-		strcpy (zdata->wrds[i], line);
-		zdata->wrds[i][strlen (line)] = '\0';
+		zdata->wrds[i] = strdup (line);
 		i++; 
 	}
 	
 	fclose (wrdsfile);
-	return 0;
+	return true;
 }
 
 static void zyper_free_wrds (zyper_data *zdata)
@@ -96,7 +94,7 @@ static void zyper_counter (void)
 static void zyper_gameloop (zyper_data *zdata)
 {
 	unsigned short lives, correctwrds;
-	char *wrd, wrd_in[50];
+	char *wrd, wrd_in[250];
 	time_t t, ts;
 	
 	lives = 3;
@@ -127,12 +125,11 @@ static void zyper_gameloop (zyper_data *zdata)
 		}
 		else
 		{
-			lives--;
-			printf ("WRONG! Lives: %hu\n", lives); 
+			printf ("WRONG! Lives: %hu\n", --lives); 
 		}
 	}
 
-	printf ("\n\nCorrect words: %hi\n", correctwrds);
+	printf ("\n\nCorrect words: %hu\n", correctwrds);
 }
 
 int main (int argc, char *argv[])
@@ -144,7 +141,7 @@ int main (int argc, char *argv[])
 	srand (time (NULL));
 	zyper_init_data (&zdata);
 	
-	if (zyper_read_wrds (&zdata, (argc == 2 ? argv[1] : "testwrds.txt")) == 0)
+	if (zyper_read_wrds (&zdata, (argc == 2 ? argv[1] : "testwrds.txt")))
 	{
 		zyper_gameloop (&zdata);
 		zyper_free_wrds (&zdata);
