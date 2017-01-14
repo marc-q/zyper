@@ -60,7 +60,7 @@ static void zyper_free_wrds (zyper_data *zdata)
 	free (zdata->wrds);
 }
 
-static char *zyper_get_wrd (const zyper_data *zdata)
+static const char *zyper_get_wrd (const zyper_data *zdata)
 {
 	return zdata->wrds[rand () % zdata->wrds_amount];
 }
@@ -94,7 +94,8 @@ static void zyper_counter (void)
 static void zyper_gameloop (zyper_data *zdata)
 {
 	unsigned short lives, correctwrds;
-	char *wrd, wrd_in[250];
+	char wrd_in[250];
+	const char *wrd;
 	time_t t, ts;
 	
 	lives = 3;
