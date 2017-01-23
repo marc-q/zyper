@@ -35,7 +35,7 @@ static bool zyper_read_wrds (zyper_data *zdata, const char *filename)
 		zdata->wrds_amount++;
 	}
 	
-	zdata->wrds = (char**) malloc (sizeof (char*) * zdata->wrds_amount);
+	zdata->wrds = malloc (sizeof (char*) * zdata->wrds_amount);
 	rewind (wrdsfile);
 	
 	i = 0;
