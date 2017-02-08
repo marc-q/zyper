@@ -4,7 +4,7 @@
 struct _zyper_data
 {
 	char **wrds;
-	short wrds_amount;
+	size_t wrds_amount;
 };
 
 typedef struct _zyper_data zyper_data;
