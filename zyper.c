@@ -94,7 +94,7 @@ zyper_counter (void)
 }
 
 static void
-zyper_gameloop (zyper_data *zdata)
+zyper_gameloop (const zyper_data *zdata)
 {
 	unsigned short lives		= 3;
 	unsigned short correctwrds	= 0;
@@ -119,8 +119,14 @@ zyper_gameloop (zyper_data *zdata)
 		
 		t = time (NULL) - t;
 		
-		if (zyper_cmpwrd (wrd, wrd_in) &&
-		    time (NULL) - ts <= 60)
+		// Times up!
+		if (time (NULL) - ts > 60)
+		{
+			printf ("TIMES UP!\n");
+			break;
+		}
+		
+		if (zyper_cmpwrd (wrd, wrd_in))
 		{
 			printf ("Done in %i seconds!\n", (int) t);
 			correctwrds++;
