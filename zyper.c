@@ -150,7 +150,7 @@ main (int argc, char *argv[])
 	srand (time (NULL));
 	zyper_init_data (&zdata);
 	
-	if (zyper_read_wrds (&zdata, (argc == 2 ? argv[1] : "testwrds.txt")))
+	if (zyper_read_wrds (&zdata, (argc == 2 ? argv[1] : "lang_c.txt")))
 	{
 		zyper_gameloop (&zdata);
 		zyper_free_wrds (&zdata);
