@@ -117,10 +117,10 @@ zyper_gameloop (const zyper_data *zdata)
 		
 		fgets (wrd_in, sizeof (wrd_in), stdin);
 		
-		t = time (NULL) - t;
+		t = 60 - (time (NULL) - ts);
 		
 		// Times up!
-		if (time (NULL) - ts > 60)
+		if (t <= 0)
 		{
 			printf ("TIMES UP!\n");
 			break;
@@ -128,7 +128,7 @@ zyper_gameloop (const zyper_data *zdata)
 		
 		if (zyper_cmpwrd (wrd, wrd_in))
 		{
-			printf ("Done in %i seconds!\n", (int) t);
+			printf ("Done, %i seconds left!\n", (int) t);
 			correctwrds++;
 		}
 		else
