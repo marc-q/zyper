@@ -41,8 +41,7 @@ zyper_read_wrds (zyper_data *zdata, const char *filename)
 	size_t i = 0;
 	while (fgets (line, sizeof (line), wrdsfile) != NULL)
 	{
-		zdata->wrds[i] = strdup (line);
-		i++; 
+		zdata->wrds[i++] = strdup (line);
 	}
 	
 	fclose (wrdsfile);
