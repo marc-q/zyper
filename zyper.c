@@ -10,7 +10,8 @@
 static bool
 zyper_cmpwrd (const char *target, const char *str)
 {
-	return strlen (target) == strlen (str) && strcmp (target, str) == 0;
+	return (strlen (target) == strlen (str) &&
+		strcmp (target, str) == 0);
 }
 
 static void
