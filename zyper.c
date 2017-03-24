@@ -128,7 +128,7 @@ zyper_gameloop (const zyper_data *zdata)
 		
 		if (zyper_cmpwrd (wrd, wrd_in))
 		{
-			printf ("Done, %i seconds left!\n", (int) t);
+			printf ("Done, %zu seconds left!\n", t);
 			correctwrds++;
 		}
 		else
